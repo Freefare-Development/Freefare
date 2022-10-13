@@ -67,6 +67,11 @@
         cursor:hand;
     }
     
+    .helper-text {
+        height: 4px;
+        
+    }
+
     .errorlist > li {
         color: #f44336;
         font-size: 16px;

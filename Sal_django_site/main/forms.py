@@ -35,7 +35,7 @@ AvailabilityFormset = inlineformset_factory(UserPost, Availability, fields=('pos
 
 class RecipientPostForm(forms.ModelForm):
     post_image = forms.ImageField(
-        widget=forms.FileInput(attrs={'accept': 'image/png,.jpg'}))
+        widget=forms.FileInput(attrs={'accept': 'image/png, .jpg, .jpeg'}))
     post_begin_date = forms.DateField(widget=SelectDateWidget)
     post_end_date = forms.DateField(widget=SelectDateWidget)
 

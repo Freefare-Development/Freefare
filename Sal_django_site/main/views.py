@@ -251,33 +251,34 @@ def edit_rpost(request, single_slug = None):
         avail_form = AvailabilityFormset(request.POST, request.FILES, instance=instance)
 
         if recipient_post_form.is_valid():
-            
-            recipient_post = recipient_post_form.save()
-            coord = recipient_post.get_geocode()
-            recipient_post.post_lat = coord[0]
-            recipient_post.post_long = coord[1]
-            recipient_post.save() 
-            recipient_post.save() 
-            if avail_form.is_valid():
+            if avail_form.is_valid():            
+                recipient_post = recipient_post_form.save()
+                coord = recipient_post.get_geocode()
+                recipient_post.post_lat = coord[0]
+                recipient_post.post_long = coord[1]
+                recipient_post.save() 
+
                 availslist = avail_form.save()
                 for avail in availslist:
-                    # avail.assigned_post = recipient_post
+                    avail.assigned_post = recipient_post
                     time = avail.get_min()
                     avail.start_min = time[0]
                     avail.end_min = time[1]
                     avail.save()
-                recipient_post.save()
+                
                 messages.success(request, f"Your post has been updated")
                 return redirect('my-posts')  
             else:
-                messages.error(request, f"Your availability input is off. Try again.")
-                # for errors in avail_form.errors:
-                #     messages.error(request, f"Your availability is off. Try again.")
+                messages.error(request, f"Some of your time input is off. Try again.")
+                for error in avail_form.errors:
+                    print(error) 
+
             
         
         else: 
-            for errors in recipient_post_form.errors:
-                    messages.error(request, f"Some of your input is off. Try again.")
+            for error in recipient_post_form.errors:
+                messages.error(request, f"There's an error : "+error+"")
+
     else:
         recipient_post_form = RecipientPostForm(instance=instance)
         avail_form = AvailabilityFormset(instance=instance)
@@ -296,15 +297,15 @@ def new_rpost(request):
         avail_form = AvailabilityFormset(request.POST, request.FILES)
 
         if recipient_post_form.is_valid():
-            
-            recipient_post = recipient_post_form.save(False)
-            recipient_post.post_creator = user
-            recipient_post.donor_or_recip = "Recipient"
-            coord = recipient_post.get_geocode()
-            recipient_post.post_lat = coord[0]
-            recipient_post.post_long = coord[1]
-            recipient_post.save() 
             if avail_form.is_valid():
+                recipient_post = recipient_post_form.save(False)
+                recipient_post.post_creator = user
+                recipient_post.donor_or_recip = "Recipient"
+                coord = recipient_post.get_geocode()
+                recipient_post.post_lat = coord[0]
+                recipient_post.post_long = coord[1]
+                recipient_post.save() 
+           
                 availslist = avail_form.save(False)
                 for avail in availslist:
                     avail.assigned_post = recipient_post
@@ -312,17 +313,20 @@ def new_rpost(request):
                     avail.start_min = time[0]
                     avail.end_min = time[1]
                     avail.save()
-                recipient_post.save()
+
+
                 messages.success(request, f"Your post has been uploaded")
                 return redirect('my-posts')  
             else:
-                for errors in avail_form.errors:
-                    messages.error(request, f"Your availability is off. Try again.")
-            
+                messages.error(request, f"Some of your time input is off. Try again.")
+                for error in avail_form.errors:
+                    print(error) 
         
         else: 
-            for errors in recipient_post_form.errors:
-                    messages.error(request, f"Some of your input is off. Try again.")
+            for error in recipient_post_form.errors:
+                messages.error(request, f"There's an error : "+error+"")
+            
+
     else:
         recipient_post_form = RecipientPostForm(initial={'post_org_name': profile.org_name, 'post_org_email':profile.org_email,
         'post_org_phone':profile.org_phone,'post_org_address':profile.org_address,'post_org_city':profile.org_city,
@@ -343,31 +347,31 @@ def edit_dpost(request, single_slug = None):
         avail_form = AvailabilityFormset(request.POST, request.FILES, instance=instance)
 
         if donor_post_form.is_valid():
-            
-            # donor_post = donor_post_form.save(False)
-            donor_post = donor_post_form.save()
-            coord = donor_post.get_geocode()
-            donor_post.post_lat = coord[0]
-            donor_post.post_long = coord[1]
-            donor_post.save()
-            if avail_form.is_valid():
+            if avail_form.is_valid():            
+                donor_post = donor_post_form.save()
+                coord = donor_post.get_geocode()
+                donor_post.post_lat = coord[0]
+                donor_post.post_long = coord[1]
+                donor_post.save()
+
                 availslist = avail_form.save()
                 for avail in availslist:
                     time = avail.get_min()
                     avail.start_min = time[0]
                     avail.end_min = time[1]
                     avail.save()
-                donor_post.save()
+
                 messages.success(request, f"Your post has been updated")
                 return redirect('my-posts')  
             else:
-                messages.error(request, f"Your availability input is off. Try again.")
-                # for errors in avail_form.errors:
-                #     messages.error(request, f"Your availability is off. Try again.")
+                messages.error(request, f"Some of your time input is off. Try again.")
+                for error in avail_form.errors:
+                    print(error) 
 
         else: 
-            for errors in donor_post_form.errors:
-                    messages.error(request, f"Some of your input is off. Try again.")
+            for error in donor_post_form.errors:
+                messages.error(request, f"There's an error : "+error+"")
+  
     else:
         donor_post_form = DonorPostForm(instance=instance)
         avail_form = AvailabilityFormset(instance=instance)
@@ -387,15 +391,15 @@ def new_dpost(request):
         avail_form = AvailabilityFormset(request.POST, request.FILES)
 
         if donor_post_form.is_valid():
-            
-            donor_post = donor_post_form.save(False)
-            donor_post.post_creator = user
-            donor_post.donor_or_recip = "Donor"
-            coord = donor_post.get_geocode()
-            donor_post.post_lat = coord[0]
-            donor_post.post_long = coord[1]
-            donor_post.save() 
-            if avail_form.is_valid():
+            if avail_form.is_valid():            
+                donor_post = donor_post_form.save(False)
+                donor_post.post_creator = user
+                donor_post.donor_or_recip = "Donor"
+                coord = donor_post.get_geocode()
+                donor_post.post_lat = coord[0]
+                donor_post.post_long = coord[1]
+                donor_post.save() 
+
                 availslist = avail_form.save(False)
                 for avail in availslist:
                     avail.assigned_post = donor_post
@@ -403,17 +407,19 @@ def new_dpost(request):
                     avail.start_min = time[0]
                     avail.end_min = time[1]
                     avail.save()
-                donor_post.save()
+
                 messages.success(request, f"Your post has been uploaded")
                 return redirect('my-posts')  
             else:
-                for errors in avail_form.errors:
-                    messages.error(request, f"Your availability is off. Try again.")
+                messages.error(request, f"Some of your time input is off. Try again.")
+                for error in avail_form.errors:
+                    print(error) 
             
         
         else: 
-            for errors in donor_post_form.errors:
-                    messages.error(request, f"Some of your input is off. Try again.")
+            for error in donor_post_form.errors:
+                messages.error(request, f"There's an error : "+error+"")
+
     else:
         donor_post_form = DonorPostForm(initial={'post_org_name': profile.org_name, 'post_org_email':profile.org_email,
         'post_org_phone':profile.org_phone,'post_org_address':profile.org_address,'post_org_city':profile.org_city,
