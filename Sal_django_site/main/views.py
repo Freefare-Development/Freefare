@@ -251,11 +251,14 @@ def edit_rpost(request, single_slug = None):
         avail_form = AvailabilityFormset(request.POST, request.FILES, instance=instance)
 
         if recipient_post_form.is_valid():
-            if avail_form.is_valid():            
+            if avail_form.is_valid():
+                # Ass  
                 recipient_post = recipient_post_form.save()
+                # Get coordinates associated with geocode of post address
                 coord = recipient_post.get_geocode()
                 recipient_post.post_lat = coord[0]
                 recipient_post.post_long = coord[1]
+                # Save the post to the database
                 recipient_post.save() 
 
                 availslist = avail_form.save()
@@ -269,7 +272,7 @@ def edit_rpost(request, single_slug = None):
                 messages.success(request, f"Your post has been updated")
                 return redirect('my-posts')  
             else:
-                messages.error(request, f"Some of your time input is off. Try again.")
+                messages.error(request, f"Some of your time input is invalid. Try again.")
                 for error in avail_form.errors:
                     print(error) 
 
