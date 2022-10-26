@@ -260,14 +260,15 @@ def edit_rpost(request, single_slug = None):
                 recipient_post.post_long = coord[1]
                 # Save the post to the database
                 recipient_post.save() 
-
+                
                 availslist = avail_form.save()
+                
                 for avail in availslist:
                     avail.assigned_post = recipient_post
                     time = avail.get_min()
                     avail.start_min = time[0]
                     avail.end_min = time[1]
-                    avail.save()
+                    avail.add()
                 
                 messages.success(request, f"Your post has been updated")
                 return redirect('my-posts')  
