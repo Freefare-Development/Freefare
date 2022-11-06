@@ -323,7 +323,6 @@ class Availability(models.Model):
 
         return coord
 
-
 class DonorPost(UserPost):
 
     def __str__(self):  # __unicode__ on Python 2

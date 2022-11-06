@@ -178,25 +178,25 @@ class ProfileTests(TestCase):
     
     # Test whether address field is greater than 3 characters
     def test_valid_org_address(self):
-        url = reverse('profile-view')
+        url = reverse('profile_view')
         response = self.client.get(url)
         self.assertTrue(re.search(r'<p class="p-line"><strong>Organzation Address: </strong>\.(.*?)</p>', response).group(1)>=3)
     
     # Test whether city field is non-empty
     def test_valid_org_address(self):
-        url = reverse('profile-view')
+        url = reverse('profile_view')
         response = self.client.get(url)
         self.assertTrue(re.search(r'<p class="p-line col"><strong> City: </strong>\.(.*?)</p>', response).group(1)!='')
     
     # Test whether state field is non-empty
     def test_valid_org_address(self):
-        url = reverse('profile-view')
+        url = reverse('profile_view')
         response = self.client.get(url)
         self.assertTrue(re.search(r'<p class="p-line col"><strong> State: </strong>\.(.*?)</p>', response).group(1)!='')
     
     # Test whether zipcode field is non-empty
     def test_valid_org_address(self):
-        url = reverse('profile-view')
+        url = reverse('profile_view')
         response = self.client.get(url)
         self.assertTrue(re.search(r'<p class="p-line col"><strong> Zipcode: </strong>\.(.*?)</p>', response).group(1)!='')
     
@@ -221,8 +221,6 @@ class ProfileTests(TestCase):
 
 # Integration Tests Start Here
 # ////////////////////////////////////////////
-
-
 
 class MySeleniumTests(StaticLiveServerTestCase):
     # This Integration Test goes through the simple flow of filling out login form and submitting
@@ -255,5 +253,3 @@ class MySeleniumTests(StaticLiveServerTestCase):
 # Third: $ coverage report -m
 # Bonus Fourth: $ coverage html
 # Bonus Fifth: Open Sal_django_site/htmlcov/index.html to see the results of your report. Scroll to the bottom of the report.
-
-

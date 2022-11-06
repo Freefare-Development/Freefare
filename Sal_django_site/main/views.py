@@ -406,7 +406,7 @@ def new_dpost(request):
                     time = avail.get_min()
                     avail.start_min = time[0]
                     avail.end_min = time[1]
-                    avail.save()
+                    donor_post.add(avail)
 
                 messages.success(request, f"Your post has been uploaded")
                 return redirect('my-posts')  
