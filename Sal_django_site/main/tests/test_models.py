@@ -42,8 +42,12 @@ class CustomUserModelTest(TestCase):
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Subject here')        
         
-
-
+        
+class ProfileModelTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # Set up non-modified objects used by all test methods
+        Profile.objects.create(email="validemail@gmail.com", your_name="Biz Person")
 # class UserModelTest(TestCase):
 #     def setUp(self):
 #         self.user = User.objects.create_user(email='user@info.com',

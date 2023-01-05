@@ -76,7 +76,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 
 APPEND_SLASH =  True
@@ -177,7 +177,7 @@ USE_TZ = True
 
 
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'
 
 
@@ -186,8 +186,8 @@ PROJECT_DIR_ABOVE = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath
 
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-    os.path.join(PROJECT_DIR, 'node_modules'),
+    os.path.join(BASE_DIR, 'main/static'),
+    os.path.join(BASE_DIR, 'node_modules'),
     ('google','node_modules/@google'),
 ]
 
