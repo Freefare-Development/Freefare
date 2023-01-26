@@ -317,6 +317,7 @@ def new_rpost(request):
                     avail.start_min = time[0]
                     avail.end_min = time[1]
                     avail.save()
+                    # avail.add()
 
 
                 messages.success(request, f"Your post has been uploaded")

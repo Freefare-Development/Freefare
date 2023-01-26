@@ -197,6 +197,7 @@ class Profile(models.Model):
     
 class UserPost(models.Model):
     
+    # userpost_id = models.IntegerField(primary_key=True)
     post_creator = models.ForeignKey(
         CustomUser, on_delete=models.CASCADE, blank=True, default=1)
     post_title = models.CharField('Post Title', max_length=30, blank=True)
