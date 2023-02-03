@@ -19,28 +19,23 @@
       <div class="search-area">
         <h1 class="cta-test center">Find or donate free food </h1>
         <div class="tab">
-          <button class="tablinks waves-light" onclick="openCity(event, 'Find-food')" id="defaultOpen">Find<i
-              class="material-icons tab-icon">location_on</i></button>
-          <button class="tablinks waves-light" onclick="openCity(event, 'Donate')">Donate<i
-              class="material-icons tab-icon">local_grocery_store</i></button>
+          <button class="tablinks waves-light" onclick="openCity(event, 'Find-food')" id="defaultOpen">Type an address below!</button>
+          <!-- <button class="tablinks waves-light" onclick="openCity(event, 'Donate')">Donate<i
+              class="material-icons tab-icon">local_grocery_store</i></button> -->
         </div>
         <div class="">
           <div id="Find-food" class="tabcontent ext-box  ">
-
               <a id="search-button" class="" onclick="searchPlace()"><i class="material-icons" >search</i></a>
-            
-              <input id="place" class="" type="text" placeholder="Type an address to find organizations looking to donate">
-
-
-          </div>
+              <input id="place" class="" type="text" placeholder="123 Sesame Street">
+          <!-- </div>
           <div id="Donate" class="tabcontent int-box ">
             <a id="search-button" onclick="searchPlace()"><span class="material-icons">search</span></a>
-            <input id="place" class="" type="text" placeholder="Type an address to find organizations looking for donations">
+            <input id="place" class="" type="text" placeholder="123 Sesame Street"> -->
           </div>
         </div>
         <br>
-        <!-- <button class="search-button" onclick="searchPlace()"> Search! <i id="search-cta"
-            class="material-icons right">location_searching</i></button> -->
+        <button class="search-button" onclick="searchPlace()"> Search! <i id="search-cta"
+            class="material-icons right">location_searching</i></button>
       </div>
     </section>
 

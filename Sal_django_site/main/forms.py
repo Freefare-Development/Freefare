@@ -54,9 +54,10 @@ class RecipientPostForm(forms.ModelForm):
 
     def clean_post_org_name(self):
         post_org_name = self.cleaned_data['post_org_name']
-        # No Special Characters
         if '<' in post_org_name or '>' in post_org_name or '*' in post_org_name or '/' in post_org_name or '|' in post_org_name or '=' in post_org_name:
            raise forms.ValidationError("Name should not have special characters.")
+        if len(post_org_name) < 2:
+            raise forms.ValidationError("Please enter a real city")
         return post_org_name
     
     def clean_post_org_email(self):
@@ -165,6 +166,8 @@ class DonorPostForm(forms.ModelForm):
         post_org_name = self.cleaned_data['post_org_name']
         if '<' in post_org_name or '>' in post_org_name or '*' in post_org_name or '/' in post_org_name or '|' in post_org_name or '=' in post_org_name:
            raise forms.ValidationError("Name should not have special characters.")
+        if len(post_org_name) < 2:
+            raise forms.ValidationError("Please enter a real city")
         return post_org_name
     
     def clean_post_org_email(self):
@@ -189,6 +192,36 @@ class DonorPostForm(forms.ModelForm):
         if len(post_org_address) < 2:
             raise forms.ValidationError("Please enter a real address")
         return post_org_address
+
+    def clean_post_org_city(self):
+        post_org_city = self.cleaned_data['post_org_city']
+        # No Special Characters
+        if '<' in post_org_city or '>' in post_org_city or '*' in post_org_city or '/' in post_org_city or '|' in post_org_city or '=' in post_org_city:
+            raise forms.ValidationError("City name should not have special characters.")
+        post_org_city = escape(post_org_city)
+        if len(post_org_city) < 2:
+            raise forms.ValidationError("Please enter a real city")
+        return post_org_city   
+     
+    def clean_post_org_state(self):
+        post_org_state = self.cleaned_data['post_org_state']
+        # No Special Characters
+        if '<' in post_org_state or '>' in post_org_state or '*' in post_org_state or '/' in post_org_state or '|' in post_org_state or '=' in post_org_state:
+            raise forms.ValidationError("State name should not have special characters.")
+        post_org_state = escape(post_org_state)
+        if len(post_org_state) < 2:
+            raise forms.ValidationError("Please enter a real state")
+        return post_org_state   
+    
+    def clean_post_org_zipcode(self):
+        post_org_zipcode = self.cleaned_data['post_org_zipcode']
+        # # No Special Characters
+        # if '<' in post_org_zipcode or '>' in post_org_zipcode or '*' in post_org_zipcode or '/' in post_org_zipcode or '|' in post_org_zipcode or '=' in post_org_zipcode:
+        #     raise forms.ValidationError("Zipcode should not have special characters.")
+        post_org_zipcode = escape(post_org_zipcode)
+        if len(post_org_zipcode) < 5:
+            raise forms.ValidationError("Please enter a real zip code")
+        return post_org_zipcode 
 
     def clean_post_org_country(self):
         post_org_country = self.cleaned_data['post_org_country']
@@ -220,16 +253,48 @@ class ProfileForm(forms.ModelForm):
         fields = ['org_name', 'org_role', 'org_email', 'org_phone', 'org_address',
                   'org_city', 'org_state', 'org_zipcode', 'org_country', 'image', 'org_desc']
 
-    def clean_org_name(self):
-        org_name = self.cleaned_data['org_name']
-        if '@' in org_name or '-' in org_name or '|' in org_name or '&' in org_name:
+    def clean_post_org_name(self):
+        post_org_name = self.cleaned_data['post_org_name']
+        if '<' in post_org_name or '>' in post_org_name or '*' in post_org_name or '/' in post_org_name or '|' in post_org_name or '=' in post_org_name:
            raise forms.ValidationError("Name should not have special characters.")
-        return org_name
+        if len(post_org_name) < 2:
+            raise forms.ValidationError("Please enter a real city")
+        return post_org_name
 
     def clean_org_address(self):
         org_address = self.cleaned_data['org_address']
         org_address = escape(org_address)
         return org_address
+
+    def clean_post_org_city(self):
+        post_org_city = self.cleaned_data['post_org_city']
+        # No Special Characters
+        if '<' in post_org_city or '>' in post_org_city or '*' in post_org_city or '/' in post_org_city or '|' in post_org_city or '=' in post_org_city:
+            raise forms.ValidationError("City name should not have special characters.")
+        post_org_city = escape(post_org_city)
+        if len(post_org_city) < 2:
+            raise forms.ValidationError("Please enter a real city")
+        return post_org_city   
+     
+    def clean_post_org_state(self):
+        post_org_state = self.cleaned_data['post_org_state']
+        # No Special Characters
+        if '<' in post_org_state or '>' in post_org_state or '*' in post_org_state or '/' in post_org_state or '|' in post_org_state or '=' in post_org_state:
+            raise forms.ValidationError("State name should not have special characters.")
+        post_org_state = escape(post_org_state)
+        if len(post_org_state) < 2:
+            raise forms.ValidationError("Please enter a real state")
+        return post_org_state
+    
+    def clean_post_org_zipcode(self):
+        post_org_zipcode = self.cleaned_data['post_org_zipcode']
+        # # No Special Characters
+        # if '<' in post_org_zipcode or '>' in post_org_zipcode or '*' in post_org_zipcode or '/' in post_org_zipcode or '|' in post_org_zipcode or '=' in post_org_zipcode:
+        #     raise forms.ValidationError("Zipcode should not have special characters.")
+        post_org_zipcode = escape(post_org_zipcode)
+        if len(post_org_zipcode) < 5:
+            raise forms.ValidationError("Please enter a real zip code")
+        return post_org_zipcode 
         
     def clean_org_country(self):
         org_country = self.cleaned_data['org_country']
