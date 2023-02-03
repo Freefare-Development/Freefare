@@ -73,7 +73,7 @@ class RecipientPostForm(forms.ModelForm):
     def clean_post_org_phone(self):
         post_org_phone = self.cleaned_data['post_org_phone']
         # No Special Characters
-        if '<' in post_org_phone or '>' in post_org_phone or '*' in post_org_phone or '/' in post_org_phone or '|' in post_org_phone or '=' in post_org_email:
+        if '<' in post_org_phone or '>' in post_org_phone or '*' in post_org_phone or '/' in post_org_phone or '|' in post_org_phone or '=' in post_org_phone:
            raise forms.ValidationError("Phone # should not have special characters.")
         if len(post_org_phone) < 10:
            raise forms.ValidationError('Phone # must be at least 10 digits')
@@ -122,9 +122,9 @@ class RecipientPostForm(forms.ModelForm):
 
     def clean_post_org_zipcode(self):
         post_org_zipcode = self.cleaned_data['post_org_zipcode']
-        # No Special Characters
-        if '<' in post_org_zipcode or '>' in post_org_zipcode or '*' in post_org_zipcode or '/' in post_org_zipcode or '|' in post_org_zipcode or '=' in post_org_zipcode:
-            raise forms.ValidationError("Zipcode should not have special characters.")
+        # # No Special Characters
+        # if '<' in post_org_zipcode or '>' in post_org_zipcode or '*' in post_org_zipcode or '/' in post_org_zipcode or '|' in post_org_zipcode or '=' in post_org_zipcode:
+        #     raise forms.ValidationError("Zipcode should not have special characters.")
         post_org_zipcode = escape(post_org_zipcode)
         if len(post_org_zipcode) < 5:
             raise forms.ValidationError("Please enter a real zip code")
@@ -135,6 +135,8 @@ class RecipientPostForm(forms.ModelForm):
         # No Special Characters
         if '<' in post_desc or '>' in post_desc or '*' in post_desc or '/' in post_desc or '|' in post_desc or '=' in post_desc:
             raise forms.ValidationError("Item description should not have special characters.")
+        if len(post_desc) < 5:
+            raise forms.ValidationError("Please describe your post")
         post_desc = escape(post_desc)
         return post_desc
 
@@ -175,7 +177,7 @@ class DonorPostForm(forms.ModelForm):
     
     def clean_post_org_phone(self):
         post_org_phone = self.cleaned_data['post_org_phone']
-        if '<' in post_org_phone or '>' in post_org_phone or '*' in post_org_phone or '/' in post_org_phone or '|' in post_org_phone or '=' in post_org_email:
+        if '<' in post_org_phone or '>' in post_org_phone or '*' in post_org_phone or '/' in post_org_phone or '|' in post_org_phone or '=' in post_org_phone:
            raise forms.ValidationError("Phone # should not have special characters.")
         if len(post_org_phone) < 10:
            raise forms.ValidationError('Phone # must be at least 10 digits')
