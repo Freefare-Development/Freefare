@@ -96,7 +96,7 @@ padding: 2pt;
 }
 
 .tab {
-  background-color: f6f6f6;
+  background-color: #f6f6f6;
   outline: none;
   cursor: pointer;
   margin: auto;
@@ -108,7 +108,7 @@ padding: 2pt;
 
 .tab > .tablinks {
   box-shadow:inset 0px 1px 0px 0px #ffffff;
-  background:linear-gradient(#f6f6f6, #ffffff 100%, #f6f6f6 5%);
+  background:linear-gradient(#f6f6f6, #ffffff 5%, #f6f6f6 5%);
   background-color:#ffffff;
   border-top-left-radius: 10pt;
   border-top-right-radius: 10pt;
@@ -194,15 +194,25 @@ height: 35pt;
   text-shadow:0px 1px 0px #ffffff;
   transition: 1s;
 }
-.search-button:hover {
+
+/* #search-button:hover {
   background:linear-gradient(#f6f6f6, #f6f6f6 , #ffffff, #f6f6f6);
   background-color:#f6f6f6;
   transition: 1s;
 }
-.search-button:active {
+#search-button:active {
 background-color: linear-gradient(#f6f6f6, #f6f6f6, #ffffff, #f6f6f6);
+  background-color:#f6f6f6;
   position:relative;
   top:1px;
   transition: 1s;
 }
- 
+  */
+
+/* .ClickThis button.visited, button:hover, button:active, button:focus {
+  background-color: rgba(255, 255, 255, 0.6);
+  } */
+
+/* #ClickThis {
+  background-color: rgba(255, 255, 255, 0.6); 
+} */
