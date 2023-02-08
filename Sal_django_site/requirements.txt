@@ -99,7 +99,7 @@ notebook==6.4.12
 numpy==1.19.4
 notebook==6.0.3
 numpy==1.22.0
-jwcrypto==1.0
+jwcrypto==1.4
 oauthlib==3.1.0
 openapi-spec-validator==0.2.9
 osmnx==1.0.1
