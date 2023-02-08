@@ -4,3 +4,8 @@ Sal_django_site/.env
 
 Sal_django_site/geckodriver.log
 Sal_django_site/env
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
