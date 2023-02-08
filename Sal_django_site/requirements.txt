@@ -48,7 +48,7 @@ geographiclib==1.50
 geopandas==0.8.0
 geopy==2.0.0
 gitdb==4.0.5
-GitPython==3.1.7
+GitPython==3.1.30
 google==3.0.0
 googlemaps==3.0.2
 graphviz==0.16
