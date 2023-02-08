@@ -133,13 +133,13 @@ padding: 2pt;
   .tab > .tablinks{ 
     border-bottom-left-radius: 10pt;
     border-bottom-right-radius: 10pt;
-    transition: 1s;
+    transition: 0.15s;
   }
 }
 .tab button:hover {
   background:linear-gradient(#f6f6f6, lightgrey 5%, #f6f6f6 5%);
   background-color:#f6f6f6;
-  transition: 1s;
+  transition: 0.15s;
 }
 .tab button.active {
   box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -157,7 +157,7 @@ padding: 2pt;
   font-weight:bold;
   padding:6pt 20pt;
   text-decoration:none;
-  transition: 1s;
+  transition: 0.15s;
 
 }
 

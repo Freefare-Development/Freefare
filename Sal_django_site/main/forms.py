@@ -136,16 +136,16 @@ class RecipientPostForm(forms.ModelForm):
         # No Special Characters
         if '<' in post_desc or '>' in post_desc or '*' in post_desc or '/' in post_desc or '|' in post_desc or '=' in post_desc:
             raise forms.ValidationError("Item description should not have special characters.")
-        if len(post_desc) < 5:
-            raise forms.ValidationError("Please describe your post")
-        post_desc = escape(post_desc)
+        # if len(post_desc) < 5:
+        #     raise forms.ValidationError("Please describe your post")
+        # post_desc = escape(post_desc)
         return post_desc
 
 
 class DonorPostForm(forms.ModelForm):
     post_image = forms.ImageField(
         widget=forms.FileInput(attrs={'accept': 'image/png,.jpg'}))
-    # post_avail = forms.ModelMultipleChoiceField(queryset=Availability.objects.all(), widget=forms.SelectMultiple)
+    post_avail = forms.ModelMultipleChoiceField(queryset=Availability.objects.all(), widget=forms.SelectMultiple)
     # post_avail = inlineformset_factory(Author, Book, fields=('title',))
     post_begin_date = forms.DateField(widget=SelectDateWidget)
     post_end_date = forms.DateField(widget=SelectDateWidget)
