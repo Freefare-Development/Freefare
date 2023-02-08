@@ -96,7 +96,7 @@ padding: 2pt;
 }
 
 .tab {
-  background-color: transparent;
+  background-color: #f6f6f6;
   outline: none;
   cursor: pointer;
   margin: auto;
@@ -108,7 +108,7 @@ padding: 2pt;
 
 .tab > .tablinks {
   box-shadow:inset 0px 1px 0px 0px #ffffff;
-  background:linear-gradient(to bottom, #ffffff 100%, #f6f6f6 100%);
+  background:linear-gradient(#f6f6f6, #ffffff 5%, #f6f6f6 5%);
   background-color:#ffffff;
   border-top-left-radius: 10pt;
   border-top-right-radius: 10pt;
@@ -126,23 +126,24 @@ padding: 2pt;
   /* overflow: hidden;
   white-space:nowrap; */
   min-width: 182px;
-  
+  transition: 1s;
 }
 
 @media screen and (max-width: 818px) {
   .tab > .tablinks{ 
     border-bottom-left-radius: 10pt;
     border-bottom-right-radius: 10pt;
-    
+    transition: 0.15s;
   }
 }
 .tab button:hover {
-  background:linear-gradient(to bottom, lightgrey 5%, #f6f6f6 100%);
+  background:linear-gradient(#f6f6f6, lightgrey 5%, #f6f6f6 5%);
   background-color:#f6f6f6;
+  transition: 0.15s;
 }
 .tab button.active {
   box-shadow:inset 0px 1px 0px 0px #ffffff;
-  background:linear-gradient(to bottom, lightgrey 5%, white 100%);
+  background:linear-gradient(to bottom, lightgrey 5%, white 5%);
   background-color:#ffffff;
   border-radius:12pt;
   border-top-left-radius: 10pt;
@@ -156,7 +157,8 @@ padding: 2pt;
   font-weight:bold;
   padding:6pt 20pt;
   text-decoration:none;
-  
+  transition: 0.15s;
+
 }
 
 .tabcontent {
@@ -177,7 +179,7 @@ margin-top: 4pt;
 width: 130pt;
 height: 35pt;
   box-shadow:inset 0px 1px 0px 0px #ffffff;
-  background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+  background:linear-gradient(#f6f6f6, #ffffff 5%, #f6f6f6 5%);
   background-color:#ffffff;
   border-radius:10px;
   border:1px solid #dcdcdc;
@@ -190,14 +192,27 @@ height: 35pt;
   padding:8pt 20pt;
   text-decoration:none;
   text-shadow:0px 1px 0px #ffffff;
+  transition: 1s;
 }
-.search-button:hover {
-  background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+
+/* #search-button:hover {
+  background:linear-gradient(#f6f6f6, #f6f6f6 , #ffffff, #f6f6f6);
   background-color:#f6f6f6;
+  transition: 1s;
 }
-.search-button:active {
-background-color: linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+#search-button:active {
+background-color: linear-gradient(#f6f6f6, #f6f6f6, #ffffff, #f6f6f6);
+  background-color:#f6f6f6;
   position:relative;
   top:1px;
+  transition: 1s;
 }
- 
+  */
+
+/* .ClickThis button.visited, button:hover, button:active, button:focus {
+  background-color: rgba(255, 255, 255, 0.6);
+  } */
+
+/* #ClickThis {
+  background-color: rgba(255, 255, 255, 0.6); 
+} */

@@ -22,7 +22,7 @@
 </div>
 <div id="main-row" class="row">
     <!-- Image -->
-    <div id="top-of-column1" class="col left-col">
+    <div id="top-of-column1" class="col left-col"> 
         {{ recipient_post_form.post_image }}
         <span class="helper-text" data-error="Invalid Image" data-success="">
             {{recipient_post_form.post_image.errors }}</span>
@@ -170,14 +170,14 @@
             {{ form.post_day.errors}}
         </div>
         {% endfor %}
-        <div class="row sign-row">
+        {% comment %} <div class="row sign-row">
             <div class="flexbox">
                 <img class="col" id="moreAvail" alt="add Availability" src="{% static 'images/icon-plus.svg' %}"
                     height="20px" style="display: block;">
                 <img class="col" id="lessAvail" alt="remove Availability" src="{% static 'images/icon-minus.svg' %}"
                     height="20px" style="display: block;">
             </div>
-        </div>
+        </div> {% endcomment %}
     </div>
 </div>
 

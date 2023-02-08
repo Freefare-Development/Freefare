@@ -14,4 +14,5 @@ def validate_is_pic(file):
     ext = os.path.splitext(file.name)[1]
     if ext.lower() not in valid_file_extensions:
         raise ValidationError('Unacceptable file extension. Only .png or .jpg are allowed!')
-    
+
+
