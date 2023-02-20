@@ -201,13 +201,13 @@ def map_page(request):
 
     return render(request=request, template_name="main/map_page.html", context={"result":result})
                   
-
+@login_required
 def profile_view(request):
-    if request.user.is_authenticated:
-        return render(request=request, template_name="main/profile_view.html")
-    else:
-        messages.info(request, f"Login to view your profile")
-        return redirect('login')
+    # if request.user.is_authenticated:
+    return render(request=request, template_name="main/profile_view.html")
+    # else:
+        # messages.info(request, f"Login to view your profile")
+        # return redirect('login')
 
 @login_required
 def profile_edit(request):
@@ -240,8 +240,9 @@ def delete(request, single_slug = None):
     instance = get_object_or_404(UserPost, post_slug = single_slug)
     instance.delete()
     return redirect('my-posts')
-    return render(request=request, template_name="main/my_posts.html")
 
+
+@login_required
 def edit_rpost(request, single_slug = None):
     user = request.user
     instance = get_object_or_404(RecipientPost, post_slug = single_slug)
@@ -288,6 +289,7 @@ def edit_rpost(request, single_slug = None):
                                                                 "avail_form": avail_form,
                                                                 "recipient_post_form": recipient_post_form})
 
+@login_required
 def new_rpost(request):
     user = request.user
     profile = request.user.profile
@@ -338,6 +340,7 @@ def new_rpost(request):
                                                                "profile" : profile,
                                                                 "avail_form": avail_form,
                                                                 "recipient_post_form": recipient_post_form})
+@login_required
 def edit_dpost(request, single_slug = None):
     user = request.user
     instance = get_object_or_404(DonorPost, post_slug = single_slug)
@@ -379,8 +382,9 @@ def edit_dpost(request, single_slug = None):
     return render(request=request, template_name="main/edit_dpost.html", context = {
                                                                 "instance": instance,
                                                                 "avail_form": avail_form,
+  
                                                                 "donor_post_form": donor_post_form})
-
+@login_required
 def new_dpost(request):
     user = request.user
     profile = request.user.profile

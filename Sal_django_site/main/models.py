@@ -308,7 +308,7 @@ class UserPost(models.Model):
 
 class Availability(models.Model):
     assigned_post = models.ForeignKey(UserPost, on_delete=models.CASCADE, blank=True, null=True)
-    post_day = MultiSelectField(choices=DAYS_OF_WEEK, max_choices=7, max_length=10, null=True)
+    post_day = MultiSelectField(choices=DAYS_OF_WEEK, max_choices=7, max_length=100, null=True)
     start_hour = models.TimeField(null=True)
     end_hour = models.TimeField(null=True)
     start_min = models.IntegerField(null=True, blank=True)
