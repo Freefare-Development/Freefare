@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.utils.http import urlquote
 from django.utils.translation import ugettext_lazy as _
 from django.core.mail import send_mail
+from django.urls import reverse
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.core.validators import RegexValidator
 from .validators import validate_is_pic
@@ -147,7 +148,7 @@ class Profile(models.Model):
     profile_slug = models.SlugField(max_length=200, null=True, unique=True)
     ############
     image = models.ImageField('Profile Image', default='default.png',
-                              upload_to='profile_pics',  blank=True, validators=(validate_is_pic,))
+                              upload_to='profile_pics',  blank=True,  null=True, validators=(validate_is_pic,))
     ############
 
     # If we don't have this, it's going to say profile object only
@@ -217,7 +218,7 @@ class UserPost(models.Model):
     post_org_zipcode = models.CharField(max_length=10, null=True, blank=True)
     post_org_country = models.CharField(
         max_length=60, default="USA", null=False)
-    post_image = models.ImageField('Profile Image', default='default.png',
+    post_image = models.ImageField('Post Image', default='default.png',
                                    upload_to='post_pics', null=True, blank=True, validators=(validate_is_pic,))
     post_desc = models.TextField(max_length=500, null=True, blank=True)
     post_begin_date = models.DateField(_("Availability Start"), default=datetime.date.today)
@@ -323,7 +324,6 @@ class Availability(models.Model):
         coord = [r1, r2]
 
         return coord
-
 
 class DonorPost(UserPost):
 

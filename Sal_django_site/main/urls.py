@@ -100,7 +100,7 @@ urlpatterns = [
     path('profile-edit/', views.profile_edit, name='profile_edit'),
     # url(r'^profile-edit$', RedirectView.as_view(url = '/profile-edit/')),
     
-    path('profile-view/', views.profile_view, name='profile-view'),
+    path('profile-view/', views.profile_view, name='profile_view'),
     # url(r'^profile-view$', RedirectView.as_view(url = '/profile-view/')),
     
     url('my-posts/', views.my_posts, name='my-posts'),

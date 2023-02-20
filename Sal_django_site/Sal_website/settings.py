@@ -77,7 +77,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 
 APPEND_SLASH =  True
@@ -110,27 +110,30 @@ TEMPLATES = [
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
-
-
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'defaultdb',
-        'USER' : 'doadmin',
-        'PASSWORD': 'AVNS_0rub7t86vsLNkona9PY',
-        'HOST' : 'db-postgresql-nyc3-88337-do-user-11366552-0.b.db.ondigitalocean.com',
-        # 'HOST': 'localhost:3000',
-        'PORT' : '25060',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'defaultdb',
+#         'USER' : 'doadmin',
+#         'PASSWORD': 'AVNS_0rub7t86vsLNkona9PY',
+#         'HOST' : 'db-postgresql-nyc3-88337-do-user-11366552-0.b.db.ondigitalocean.com',
+#         # 'HOST': 'localhost:3000',
+#         'PORT' : '25060',
+#                 'TEST': {
+#             'NAME': 'test_postdb',
+#         },
+#     }
+# }
 
 
 
@@ -175,7 +178,7 @@ USE_TZ = True
 
 
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'
 
 
@@ -184,8 +187,8 @@ PROJECT_DIR_ABOVE = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath
 
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-    os.path.join(PROJECT_DIR, 'node_modules'),
+    os.path.join(BASE_DIR, 'main/static'),
+    os.path.join(BASE_DIR, 'node_modules'),
     ('google','node_modules/@google'),
 ]
 
