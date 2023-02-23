@@ -3,7 +3,7 @@ from django.test import Client
 from django.urls import reverse
 
 from main.models import CustomUser, Profile, RecipientPost, Availability
-from main.forms import ProfileForm, AvailabilityFormset
+from main.forms import ProfileForm, RecipientPostForm, AvailabilityFormset
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 import datetime
@@ -72,7 +72,7 @@ class EditPostViewTest(TestCase):
         'post_org_desc': "Example text sentence."}
         
         image_path = Path(__file__).parent / "../media/default.png"
-        self.test_post_form = ProfileForm(data, {'post_image': SimpleUploadedFile(name='default.png', content=open(image_path, 'rb').read(), content_type='image/jpeg') })
+        self.test_post_form = RecipientPostForm(data, {'post_image': SimpleUploadedFile(name='default.png', content=open(image_path, 'rb').read(), content_type='image/jpeg') })
         
         self.r_post = RecipientPost.objects.create(post_creator= test_user1, post_org_name= "Biz", donor_or_recip="Donor", 
         post_org_email="validemail@gmail.com", post_org_phone="1234567890", post_org_address="1112 Winans Ave",
@@ -111,7 +111,9 @@ class EditPostViewTest(TestCase):
         
     def test_redirects_to_all_posts_list_on_success(self):
         login = self.client.login(username='validemail@gmail.com', password='2HJ1vRV0Z&3iD')
-        print(self.test_post_form)
+        print("****")
+        print(self.test_post_form.clean_post_org_phone)
+        print("****")
         # valid_date_in_future = datetime.date.today() + datetime.timedelta(weeks=2)
         # response = self.client.post(reverse('new_rpost', kwargs={'recipient_post_form':self.r_post.pk,}), {'avail_form':self.newAvail})
         # response = self.client.post(reverse('new_rpost'),{'recipient_post_form':self.test_post_form}, {'avail_form':self.av_data})

@@ -74,10 +74,10 @@ class RecipientPostForm(forms.ModelForm):
     def clean_post_org_phone(self):
         post_org_phone = self.cleaned_data['post_org_phone']
         # No Special Characters
-        if '<' in post_org_phone or '>' in post_org_phone or '*' in post_org_phone or '/' in post_org_phone or '|' in post_org_phone or '=' in post_org_phone:
-           raise forms.ValidationError("Phone # should not have special characters.")
-        if len(post_org_phone) < 10:
-           raise forms.ValidationError('Phone # must be at least 10 digits')
+        # if '<' in post_org_phone or '>' in post_org_phone or '*' in post_org_phone or '/' in post_org_phone or '|' in post_org_phone or '=' in post_org_phone:
+        #    raise forms.ValidationError("Phone # should not have special characters.")
+        # if len(post_org_phone) < 10:
+        #    raise forms.ValidationError('Phone # must be at least 10 digits')
         return post_org_phone
     
 
