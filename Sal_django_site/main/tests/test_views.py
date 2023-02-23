@@ -81,12 +81,15 @@ class EditPostViewTest(TestCase):
         
         self.av_data={
             'form-TOTAL_FORMS': 1, 
-            'form-INITIAL_FORMS': 0, 
+            'form-INITIAL_FORMS': 0,
+            'form-MAX_NUM_FORMS': 4, 
             
             # "form-0-assigned_post" :self.r_post, 
             "form-0-post_day": ['m', 'th'],
             "form-0-start_hour" :datetime.time(10, 33, 45), 
-            "form-0-end_hour" :datetime.time(10, 50, 45)}
+            "form-0-end_hour" :datetime.time(10, 50, 45)
+            
+            }
         
         # self.formset = AvailabilityFormset(av_data)
         
@@ -108,6 +111,7 @@ class EditPostViewTest(TestCase):
         
     def test_redirects_to_all_posts_list_on_success(self):
         login = self.client.login(username='validemail@gmail.com', password='2HJ1vRV0Z&3iD')
+        print(self.test_post_form)
         # valid_date_in_future = datetime.date.today() + datetime.timedelta(weeks=2)
         # response = self.client.post(reverse('new_rpost', kwargs={'recipient_post_form':self.r_post.pk,}), {'avail_form':self.newAvail})
         # response = self.client.post(reverse('new_rpost'),{'recipient_post_form':self.test_post_form}, {'avail_form':self.av_data})
