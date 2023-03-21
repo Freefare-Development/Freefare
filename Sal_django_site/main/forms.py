@@ -1,16 +1,11 @@
-import os
+import datetime
 from django import forms
 from django.contrib.auth import password_validation
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import CustomUser, Profile, UserPost, Availability, DonorPost, RecipientPost
-from .models import DAYS_OF_WEEK
-# from address.forms import AddressField, AddressWidget
-# import django.contrib.admin.widgets
 from django.utils.html import escape
-from django.forms.widgets import SelectDateWidget, DateTimeInput
-from django.forms import inlineformset_factory
-from django.forms import formset_factory
-from django.forms import ModelForm
+from django.forms.widgets import SelectDateWidget
+from django.forms import inlineformset_factory, ModelForm, BaseInlineFormSet
 
 
 class ContactForm(forms.Form):
@@ -18,7 +13,20 @@ class ContactForm(forms.Form):
     name = forms.CharField(required=True)
     message = forms.CharField(widget=forms.Textarea, required=True)
 
+# class BaseAvailabilityFormSet(BaseInlineFormSet):
+#     def clean(self):
+#         days = []
+#         for form in self.forms:
+#             day = form.cleaned_data['post_day']
+#             if day in days:
+#                 raise forms.ValidationError("No need for duplicate days")
+#             days.append(day)
+            
 
+# This code is in a formset to enable adding multiple availbilities down the road 
+# links for future reference https://stackoverflow.com/questions/48472401/how-to-validate-formsets-in-django
+# as well as https://stackoverflow.com/questions/68382186/django-add-form-validation-to-inlineformset-factory
+# and https://stackoverflow.com/questions/46787810/custom-validation-for-formset-in-django
 AvailabilityFormset = inlineformset_factory(UserPost, Availability, fields=('post_day', 'start_hour', 'end_hour',),
                                             widgets={
     'post_day': forms.CheckboxSelectMultiple,
@@ -29,10 +37,12 @@ AvailabilityFormset = inlineformset_factory(UserPost, Availability, fields=('pos
         'type': 'time'
     })},
     extra=4,
+    # formset=BaseAvailabilityFormSet,
     # can_order=True
 )
 
 
+        
 class RecipientPostForm(forms.ModelForm):
     post_image = forms.ImageField(
         widget=forms.FileInput(attrs={'accept': 'image/png, .jpg, .jpeg'}))
@@ -42,8 +52,8 @@ class RecipientPostForm(forms.ModelForm):
     class Meta:
         model = RecipientPost
         fields = ['post_title', 'post_org_name', 'post_org_phone', 'post_org_email', 'post_org_address', 'post_org_city',
-                  'post_org_state', 'post_org_zipcode', 'post_org_country', 'post_desc', 'post_begin_date', 'post_image',
-                  'post_end_date', 'post_deliver', 'post_recurring', 'recurrences', ]
+                  'post_org_state', 'post_org_zipcode', 'post_org_country', 'post_desc', 'post_begin_date', 
+                  'post_end_date', 'post_image', 'post_deliver', 'post_recurring', 'recurrences', ]
 
     def clean_post_title(self):
         post_title = self.cleaned_data['post_title']
@@ -140,6 +150,18 @@ class RecipientPostForm(forms.ModelForm):
         #     raise forms.ValidationError("Please describe your post")
         # post_desc = escape(post_desc)
         return post_desc
+ 
+    
+    def clean(self):
+        # print(self.cleaned_data)
+        post_begin_date = self.cleaned_data.get('post_begin_date')
+        post_end_date = self.cleaned_data.get('post_end_date')
+        today = datetime.date.today()
+        if post_end_date < post_begin_date:
+           raise forms.ValidationError("Pick an end date after the begin date.")
+        if post_end_date < today:
+           raise forms.ValidationError("Pick an end date of today or later.")
+  
 
 
 class DonorPostForm(forms.ModelForm):

@@ -24,7 +24,7 @@ class UserPostSerializer(serializers.ModelSerializer):
     post_image = serializers.ImageField(required=False)
     class Meta:
         model = UserPost
-        fields = ("post_title","post_lat","post_long","post_deliver","donor_or_recip", "post_image" "post_desc", "post_slug","availability_set", )
+        fields = ("post_title","post_lat","post_long","post_deliver","donor_or_recip", "post_image", "post_desc", "post_slug","availability_set", )
         extra_kwargs = {"owner": {"required": False, "allow_null": True}}
     # def get_validation_exclusions(self):
     #     exclusions = super(UserPostSerializer, self).get_validation_exclusions()
