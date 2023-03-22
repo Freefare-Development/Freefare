@@ -69,8 +69,9 @@ class EditPostViewTest(TestCase):
         data={'post_creator': test_user1, 'post_org_name': "Biz", 'post_org_role': "Donor", 
         'post_org_email': "validemail@gmail.com", 'post_org_phone': "1234567890", 'post_org_address': "1112 Winans Ave",
         'post_org_city': "Linden", 'post_org_state': "NJ", 'post_org_zipcode': "07036", 'post_org_country': "USA", 
-        'post_org_desc': "Example text sentence."}
-        
+        'post_org_desc': "Example text sentence.",'post_begin_date': datetime.date(2023, 1, 28), 'post_end_date': datetime.date(2023, 5, 1),
+         'post_deliver': False, 'post_recurring': False, 'recurrences': ''}
+        # 'post_image': <ImageFieldFile: post_pics/heart-png-38780.png>,
         image_path = Path(__file__).parent / "../media/default.png"
         self.test_post_form = RecipientPostForm(data, {'post_image': SimpleUploadedFile(name='default.png', content=open(image_path, 'rb').read(), content_type='image/jpeg') })
         
@@ -80,14 +81,15 @@ class EditPostViewTest(TestCase):
         post_desc="Example text sentence.")
         
         self.av_data={
-            'form-TOTAL_FORMS': 1, 
-            'form-INITIAL_FORMS': 0,
-            'form-MAX_NUM_FORMS': 4, 
+            'availability_set-TOTAL_FORMS': 1, 
+            'availability_set-INITIAL_FORMS': 0,
+            'availability_set-MIN_NUM_FORMS':0,
+            'availability_set-MAX_NUM_FORMS': 1000, 
             
-            # "form-0-assigned_post" :self.r_post, 
-            "form-0-post_day": ['m', 'th'],
-            "form-0-start_hour" :datetime.time(10, 33, 45), 
-            "form-0-end_hour" :datetime.time(10, 50, 45)
+            "availability_set-0-assigned_post" :self.r_post, 
+            "availability_set-0-post_day": ['m', 'th'],
+            "availability_set-0-start_hour" :datetime.time(10, 33, 45), 
+            "availability_set-0-end_hour" :datetime.time(10, 50, 45)
             
             }
         
