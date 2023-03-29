@@ -269,7 +269,8 @@ def edit_rpost(request, single_slug = None):
                     time = avail.get_min()
                     avail.start_min = time[0]
                     avail.end_min = time[1]
-                    avail.add()
+                    avail.save()
+                    # avail.add()
                 
                 messages.success(request, f"Your post has been updated")
                 return redirect('my-posts')  
@@ -380,8 +381,8 @@ def edit_dpost(request, single_slug = None):
 
         else: 
             for error in donor_post_form.errors:
-                # messages.error(request, f"There's an error : "+error+"".replace("_"," "))
-                messages.error(request, f"There's an error somewhere")
+                messages.error(request, f"There's an error : "+error+"".replace("_"," "))
+                # messages.error(request, f"There's an error somewhere. Check")
   
     else:
         donor_post_form = DonorPostForm(instance=instance)
@@ -418,7 +419,7 @@ def new_dpost(request):
                     time = avail.get_min()
                     avail.start_min = time[0]
                     avail.end_min = time[1]
-                    donor_post.add(avail)
+                    avail.save()
 
                 messages.success(request, f"Your post has been uploaded")
                 return redirect('my-posts')  
