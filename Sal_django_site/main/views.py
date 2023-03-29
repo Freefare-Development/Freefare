@@ -283,8 +283,8 @@ def edit_rpost(request, single_slug = None):
         
         else: 
             for error in recipient_post_form.errors:
-                # messages.error(request, f"There's an error : "+error+" ".replace("_"," "))
-                messages.error(request, f"There's an error somewhere")
+                messages.error(request, f"There's an error : "+error+" ".replace("_"," "))
+                # messages.error(request, f"There's an error somewhere")
 
     else:
         recipient_post_form = RecipientPostForm(instance=instance)
@@ -333,8 +333,8 @@ def new_rpost(request):
         
         else: 
             for error in recipient_post_form.errors:
-                # messages.error(request, f"There's an error : "+error+"".replace("_"," "))
-                messages.error(request, f"There's an error somewhere")
+                messages.error(request, f"There's an error : "+error+"".replace("_"," "))
+                # messages.error(request, f"There's an error somewhere")
             
 
     else:
@@ -380,7 +380,7 @@ def edit_dpost(request, single_slug = None):
                     print(error) 
 
         else: 
-            for error in donor_post_form.errors:
+            for error in donor_post_form.errors: #At some point if you can get an input's label from it's error
                 messages.error(request, f"There's an error : "+error+"".replace("_"," "))
                 # messages.error(request, f"There's an error somewhere. Check")
   
@@ -431,8 +431,8 @@ def new_dpost(request):
         
         else: 
             for error in donor_post_form.errors:
-                # messages.error(request, f"There's an error : "+error+"".replace("_"," "))
-                messages.error(request, f"There's an error somewhere")
+                messages.error(request, f"There's an error : "+error+"".replace("_"," "))
+                # messages.error(request, f"There's an error somewhere")
 
     else:
         donor_post_form = DonorPostForm(initial={'post_org_name': profile.org_name, 'post_org_email':profile.org_email,
