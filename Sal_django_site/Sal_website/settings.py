@@ -34,7 +34,7 @@ DEBUG = True
 
 # ALLOWED_HOSTS = []
 ALLOWED_HOSTS = [os.getenv("DJANGO_ALLOWED_HOSTS"),"127.0.0.1","localhost","167.71.106.235","68.183.143.170","32.213.8.188","24.60.248.41","108.30.157.162", "192.168.1.69",
-                 "74.71.89.122","24.97.185.90", "98.113.160.98", "74.71.90.175", "74.71.79.251"]
+                 "74.71.89.122","24.97.185.90", "98.113.160.98", "74.71.90.175", "74.71.79.251", "testserver"]
                          
 # ['freefoodsal.com', 'www.freefoodsal.com', '167.71.106.235', 'http://127.0.0.1:8000']
 # Application definition
@@ -110,30 +110,30 @@ TEMPLATES = [
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
-
-
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'defaultdb',
-        'USER' : 'doadmin',
-        'PASSWORD': 'AVNS_0rub7t86vsLNkona9PY',
-        'HOST' : 'db-postgresql-nyc3-88337-do-user-11366552-0.b.db.ondigitalocean.com',
-        # 'HOST': 'localhost:3000',
-        'PORT' : '25060',
-                'TEST': {
-            'NAME': 'test_postdb',
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'defaultdb',
+#         'USER' : 'doadmin',
+#         'PASSWORD': 'AVNS_0rub7t86vsLNkona9PY',
+#         'HOST' : 'db-postgresql-nyc3-88337-do-user-11366552-0.b.db.ondigitalocean.com',
+#         # 'HOST': 'localhost:3000',
+#         'PORT' : '25060',
+#                 'TEST': {
+#             'NAME': 'test_postdb',
+#         },
+#     }
+# }
 
 
 
@@ -292,13 +292,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 # also this:
 # https://docs.djangoproject.com/en/dev/topics/email/
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'salhateswaste@gmail.com'
-# EMAIL_HOST = 'smtp.sendgrid.net' # new
-# EMAIL_HOST_USER = 'apikey' # new
-# EMAIL_HOST_PASSWORD = '<sendgrid_password>' # new
-# EMAIL_PORT = 587 # new
-# EMAIL_USE_TLS = True # new
+
 
 # [...]
 # The following is another try at developing our email backend
@@ -307,10 +301,13 @@ DEFAULT_FROM_EMAIL = 'salhateswaste@gmail.com'
 ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'salhateswaste@gmail.com'
 EMAIL_HOST_USER= os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD= os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
+
 
 # Password reset settings
 PASSWORD_RESET_TIMEOUT_DAYS = 2

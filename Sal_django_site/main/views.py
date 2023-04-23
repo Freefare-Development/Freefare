@@ -52,14 +52,20 @@ def contactView(request):
     else:
         form = ContactForm(request.POST)
         if form.is_valid():
-            subject = form.cleaned_data['subject'] + " : "+ form.cleaned_data['name']
+            subject = "Inquiry From Freefare Contact Form"+ ": from "+ form.cleaned_data['name']
             from_email = form.cleaned_data['from_email']
             message = form.cleaned_data['message']
+            recipient_list = ['salhateswaste@gmail.com']
+            # connection = [
+            #     'xyz@gmail.com',
+            #     'mypassword',
+            #     False,
+            # ]
             try:
-                # send_mail(subject, message, from_email, ['salhateswaste@gmail.com'])
-                mail = EmailMessage(subject, message, to=['salhateswaste@gmail.com'], from_email=from_email)
-                mail.content_subtype = 'html'
-                mail.send()
+                send_mail(subject, message, from_email, recipient_list)
+                # mail = EmailMessage(subject, message, to=['salhateswaste@gmail.com'], from_email=from_email)
+                # mail.content_subtype = 'html'
+                # mail.send()
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
             return redirect('success')
@@ -301,9 +307,10 @@ def new_rpost(request):
     profile = request.user.profile
     
     if request.method == "POST":
+
         recipient_post_form = RecipientPostForm(request.POST, request.FILES)
         avail_form = AvailabilityFormset(request.POST, request.FILES)
-
+        
         if recipient_post_form.is_valid():
             if avail_form.is_valid():
                 recipient_post = recipient_post_form.save(False)
@@ -321,19 +328,19 @@ def new_rpost(request):
                     avail.start_min = time[0]
                     avail.end_min = time[1]
                     avail.save()
-                    # avail.add()
 
 
                 messages.success(request, f"Your post has been uploaded")
                 return redirect('my-posts')  
             else:
                 messages.error(request, f"Some of your time input is off. Try again.")
-                for error in avail_form.errors:
-                    print(error) 
+                # for error in avail_form.errors:
+                #     print(error) 
         
         else: 
             for error in recipient_post_form.errors:
                 messages.error(request, f"There's an error : "+error+"".replace("_"," "))
+                # print(error) 
                 # messages.error(request, f"There's an error somewhere")
             
 

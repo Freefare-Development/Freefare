@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.test import Client
 from django.urls import reverse
+from django.http import HttpRequest
 
 from main.models import CustomUser, Profile, RecipientPost, Availability
 from main.forms import ProfileForm, RecipientPostForm, AvailabilityFormset
@@ -64,13 +65,13 @@ class EditPostViewTest(TestCase):
         test_user1.save()
         test_user2.save()
         
-        profile_user1 = Profile.objects.create(user=test_user1)
+        self.profile_user1 = Profile.objects.create(user=test_user1)
         # Create a post
         data={'post_creator': test_user1, 'post_org_name': "Biz", 'post_org_role': "Donor", 
         'post_org_email': "validemail@gmail.com", 'post_org_phone': "1234567890", 'post_org_address': "1112 Winans Ave",
         'post_org_city': "Linden", 'post_org_state': "NJ", 'post_org_zipcode': "07036", 'post_org_country': "USA", 
         'post_org_desc': "Example text sentence.",'post_begin_date': datetime.date(2023, 1, 28), 'post_end_date': datetime.date(2023, 5, 1),
-         'post_deliver': False, 'post_recurring': False, 'recurrences': ''}
+         'post_deliver': False, 'post_recurring': False, 'recurrences': " "}
         # 'post_image': <ImageFieldFile: post_pics/heart-png-38780.png>,
         image_path = Path(__file__).parent / "../media/default.png"
         self.test_post_form = RecipientPostForm(data, {'post_image': SimpleUploadedFile(name='default.png', content=open(image_path, 'rb').read(), content_type='image/jpeg') })
@@ -79,6 +80,13 @@ class EditPostViewTest(TestCase):
         post_org_email="validemail@gmail.com", post_org_phone="1234567890", post_org_address="1112 Winans Ave",
         post_org_city="Linden", post_org_state="NJ", post_org_zipcode="07036", post_org_country= "USA", 
         post_desc="Example text sentence.")
+        
+        full_filename=Path(__file__).parent / "../media/default.png"
+        self.data={'post_creator': test_user1, 'post_org_name': "Biz", 'post_org_role': "Donor", 
+        'post_org_email': "validemail@gmail.com", 'post_org_phone': "1234567890", 'post_org_address': "1112 Winans Ave",
+        'post_org_city': "Linden", 'post_org_state': "NJ", 'post_org_zipcode': "07036", 'post_org_country': "USA", 
+        'post_desc': "Example text sentence.",'post_begin_date': datetime.date(2023, 1, 28), 'post_end_date': datetime.date(2023, 5, 1),
+        'post_image':("test_file.png", open(full_filename, "rb")), 'post_deliver': False, 'post_recurring': False, 'recurrences': " "}
         
         self.av_data={
             'availability_set-TOTAL_FORMS': 1, 
@@ -113,13 +121,11 @@ class EditPostViewTest(TestCase):
         
     def test_redirects_to_all_posts_list_on_success(self):
         login = self.client.login(username='validemail@gmail.com', password='2HJ1vRV0Z&3iD')
+        response = self.client.post(reverse('new_rpost'), data={**self.data, **self.av_data})
+        # response = self.client.get(reverse('new_rpost'))
         print("****")
-        print(self.test_post_form.clean_post_org_phone)
-        print("****")
-        # valid_date_in_future = datetime.date.today() + datetime.timedelta(weeks=2)
-        # response = self.client.post(reverse('new_rpost', kwargs={'recipient_post_form':self.r_post.pk,}), {'avail_form':self.newAvail})
-        # response = self.client.post(reverse('new_rpost'),{'recipient_post_form':self.test_post_form}, {'avail_form':self.av_data})
-        response = self.client.post(reverse('new_rpost'),data={'recipient_post_form':self.test_post_form, 'avail_form':self.av_data})
-        self.assertRedirects(response, reverse('my_posts'))
+        print(response.content)
+        # self.assertTemplateUsed(response, 'main/email.html')
+        self.assertRedirects(response, reverse('my-posts'))
         
     

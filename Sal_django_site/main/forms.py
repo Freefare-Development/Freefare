@@ -138,6 +138,9 @@ class RecipientPostForm(forms.ModelForm):
       
     def clean_post_desc(self):
         post_desc = self.cleaned_data['post_desc']
+        # print(self.cleaned_data)
+        # print("********")
+        # print(len(post_desc))
         post_desc = escape(post_desc)
         if '<' in post_desc or '>' in post_desc or '*' in post_desc or '/' in post_desc or '|' in post_desc or '=' in post_desc:
             raise forms.ValidationError("Item description should not have special characters.")
@@ -147,8 +150,10 @@ class RecipientPostForm(forms.ModelForm):
  
     
     def clean(self):
+        # print(self.cleaned_data)
         post_begin_date = self.cleaned_data.get('post_begin_date')
         post_end_date = self.cleaned_data.get('post_end_date')
+    
         today = datetime.date.today()
         if post_end_date < post_begin_date:
            raise forms.ValidationError("Pick an end date after the begin date.")
