@@ -222,8 +222,6 @@ class ProfileTests(TestCase):
 # Integration Tests Start Here
 # ////////////////////////////////////////////
 
-
-
 class MySeleniumTests(StaticLiveServerTestCase):
     # This Integration Test goes through the simple flow of filling out login form and submitting
 
@@ -255,5 +253,3 @@ class MySeleniumTests(StaticLiveServerTestCase):
 # Third: $ coverage report -m
 # Bonus Fourth: $ coverage html
 # Bonus Fifth: Open Sal_django_site/htmlcov/index.html to see the results of your report. Scroll to the bottom of the report.
-
-

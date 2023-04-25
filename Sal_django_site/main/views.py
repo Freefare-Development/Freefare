@@ -4,6 +4,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_text
 from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
@@ -52,14 +53,20 @@ def contactView(request):
     else:
         form = ContactForm(request.POST)
         if form.is_valid():
-            subject = form.cleaned_data['subject'] + " : "+ form.cleaned_data['name']
+            subject = "Inquiry From Freefare Contact Form"+ ": from "+ form.cleaned_data['name']
             from_email = form.cleaned_data['from_email']
             message = form.cleaned_data['message']
+            recipient_list = ['salhateswaste@gmail.com']
+            # connection = [
+            #     'xyz@gmail.com',
+            #     'mypassword',
+            #     False,
+            # ]
             try:
-                # send_mail(subject, message, from_email, ['salhateswaste@gmail.com'])
-                mail = EmailMessage(subject, message, to=['salhateswaste@gmail.com'], from_email=from_email)
-                mail.content_subtype = 'html'
-                mail.send()
+                send_mail(subject, message, from_email, recipient_list)
+                # mail = EmailMessage(subject, message, to=['salhateswaste@gmail.com'], from_email=from_email)
+                # mail.content_subtype = 'html'
+                # mail.send()
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
             return redirect('success')
@@ -109,20 +116,32 @@ def signup(request):
             Profile.objects.create(user=user)
             token = user_tokenizer.make_token(user)
             user_id = urlsafe_base64_encode(force_bytes(user.id))
-            url = 'http://localhost:8000' + reverse('confirm_email', kwargs={'user_id': user_id, 'token': token})
-            message = get_template("main/account_activation_email.html").render({
+            current_site = get_current_site(request)  
+            subject = 'Freefare Confirmation Email'
+            from_email = settings.EMAIL_HOST_USER
+            recipient_list = [user.email]
+            url = current_site.domain + reverse('confirm_email', kwargs={'user_id': user_id, 'token': token})
+            html_message = render_to_string('main/account_activation_email.html', {'confirm_url': url})
+            plain_message = strip_tags(html_message)
+
+            # url = 'http://localhost:8000' + reverse('confirm_email', kwargs={'user_id': user_id, 'token': token})
+            message = get_template("main/account_activation_email_simple.html").render({
               'confirm_url': url
             })
-            mail = EmailMessage('Freefare Confirmation Email', message, to=[user.email], from_email=settings.EMAIL_HOST_USER)
-            mail.content_subtype = 'html'
-            mail.send()
+            # mail = EmailMessage('Freefare Confirmation Email', message, to=[user.email], from_email=settings.EMAIL_HOST_USER)
+            # mail.content_subtype = 'html'
+            # mail.send()
+            
+            try:
+                send_mail(subject, plain_message, from_email, recipient_list, html_message=html_message)      
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
             messages.success(request,  f'A confirmation email has been sent to {user.email}. Please confirm to finish registering')
-
             return redirect("homepage")
-
+        
         else:
             for msg in form.error_messages:
-                messages.error(request, f"Some of your input is off. Try again.")
+                messages.error(request, f"Registration failed. Try again.")
             
             return render(request = request,
                           template_name = "main/signup.html",
@@ -201,13 +220,13 @@ def map_page(request):
 
     return render(request=request, template_name="main/map_page.html", context={"result":result})
                   
-
+@login_required
 def profile_view(request):
-    if request.user.is_authenticated:
-        return render(request=request, template_name="main/profile_view.html")
-    else:
-        messages.info(request, f"Login to view your profile")
-        return redirect('login')
+    # if request.user.is_authenticated:
+    return render(request=request, template_name="main/profile_view.html")
+    # else:
+        # messages.info(request, f"Login to view your profile")
+        # return redirect('login')
 
 @login_required
 def profile_edit(request):
@@ -240,8 +259,9 @@ def delete(request, single_slug = None):
     instance = get_object_or_404(UserPost, post_slug = single_slug)
     instance.delete()
     return redirect('my-posts')
-    return render(request=request, template_name="main/my_posts.html")
 
+
+@login_required
 def edit_rpost(request, single_slug = None):
     user = request.user
     instance = get_object_or_404(RecipientPost, post_slug = single_slug)
@@ -268,7 +288,8 @@ def edit_rpost(request, single_slug = None):
                     time = avail.get_min()
                     avail.start_min = time[0]
                     avail.end_min = time[1]
-                    avail.add()
+                    avail.save()
+                    # avail.add()
                 
                 messages.success(request, f"Your post has been updated")
                 return redirect('my-posts')  
@@ -281,8 +302,8 @@ def edit_rpost(request, single_slug = None):
         
         else: 
             for error in recipient_post_form.errors:
-                # messages.error(request, f"There's an error : "+error+" ".replace("_"," "))
-                messages.error(request, f"There's an error somewhere")
+                messages.error(request, f"There's an error : "+error+" ".replace("_"," "))
+                # messages.error(request, f"There's an error somewhere")
 
     else:
         recipient_post_form = RecipientPostForm(instance=instance)
@@ -293,14 +314,16 @@ def edit_rpost(request, single_slug = None):
                                                                 "avail_form": avail_form,
                                                                 "recipient_post_form": recipient_post_form})
 
+@login_required
 def new_rpost(request):
     user = request.user
     profile = request.user.profile
     
     if request.method == "POST":
+
         recipient_post_form = RecipientPostForm(request.POST, request.FILES)
         avail_form = AvailabilityFormset(request.POST, request.FILES)
-
+        
         if recipient_post_form.is_valid():
             if avail_form.is_valid():
                 recipient_post = recipient_post_form.save(False)
@@ -318,20 +341,20 @@ def new_rpost(request):
                     avail.start_min = time[0]
                     avail.end_min = time[1]
                     avail.save()
-                    # avail.add()
 
 
                 messages.success(request, f"Your post has been uploaded")
                 return redirect('my-posts')  
             else:
                 messages.error(request, f"Some of your time input is off. Try again.")
-                for error in avail_form.errors:
-                    print(error) 
+                # for error in avail_form.errors:
+                #     print(error) 
         
         else: 
             for error in recipient_post_form.errors:
-                # messages.error(request, f"There's an error : "+error+"".replace("_"," "))
-                messages.error(request, f"There's an error somewhere")
+                messages.error(request, f"There's an error : "+error+"".replace("_"," "))
+                # print(error) 
+                # messages.error(request, f"There's an error somewhere")
             
 
     else:
@@ -345,6 +368,7 @@ def new_rpost(request):
                                                                "profile" : profile,
                                                                 "avail_form": avail_form,
                                                                 "recipient_post_form": recipient_post_form})
+@login_required
 def edit_dpost(request, single_slug = None):
     user = request.user
     instance = get_object_or_404(DonorPost, post_slug = single_slug)
@@ -376,9 +400,9 @@ def edit_dpost(request, single_slug = None):
                     print(error) 
 
         else: 
-            for error in donor_post_form.errors:
-                # messages.error(request, f"There's an error : "+error+"".replace("_"," "))
-                messages.error(request, f"There's an error somewhere")
+            for error in donor_post_form.errors: #At some point if you can get an input's label from it's error
+                messages.error(request, f"There's an error : "+error+"".replace("_"," "))
+                # messages.error(request, f"There's an error somewhere. Check")
   
     else:
         donor_post_form = DonorPostForm(instance=instance)
@@ -387,8 +411,9 @@ def edit_dpost(request, single_slug = None):
     return render(request=request, template_name="main/edit_dpost.html", context = {
                                                                 "instance": instance,
                                                                 "avail_form": avail_form,
+  
                                                                 "donor_post_form": donor_post_form})
-
+@login_required
 def new_dpost(request):
     user = request.user
     profile = request.user.profile
@@ -426,8 +451,8 @@ def new_dpost(request):
         
         else: 
             for error in donor_post_form.errors:
-                # messages.error(request, f"There's an error : "+error+"".replace("_"," "))
-                messages.error(request, f"There's an error somewhere")
+                messages.error(request, f"There's an error : "+error+"".replace("_"," "))
+                # messages.error(request, f"There's an error somewhere")
 
     else:
         donor_post_form = DonorPostForm(initial={'post_org_name': profile.org_name, 'post_org_email':profile.org_email,

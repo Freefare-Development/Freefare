@@ -624,10 +624,13 @@
       for (i = 0; i < markerCount; i++) {
         marker = gmarkers1[i];
         // console.log(marker.category)
-        //Filter to show any markets containing ALL of the selected options
-        if (typeof marker.category == 'object' && checkedBoxes.every(function (o) {
+        //Filter to show any markers containing ALL of the selected options
+        if (typeof marker.category == 'object' && checkedBoxes.some(function (o) {
           return (marker.category).indexOf(o) >= 0;
         })) {
+        // if (typeof marker.category == 'object' && checkedBoxes.every(function (o) {
+        //   return (marker.category).indexOf(o) >= 0;
+        // })) {
           marker.setVisible(true);
 
           newmarkers.push(marker);

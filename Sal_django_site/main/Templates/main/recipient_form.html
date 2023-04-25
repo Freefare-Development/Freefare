@@ -166,10 +166,12 @@
                     </label>
                 </div>
                 {% endfor %}
+                {{ form.post_day.errors}}
             </div>
-            {{ form.post_day.errors}}
+            {{ recipient_post_form.non_field_errors}}
         </div>
         {% endfor %}
+
         {% comment %} <div class="row sign-row">
             <div class="flexbox">
                 <img class="col" id="moreAvail" alt="add Availability" src="{% static 'images/icon-plus.svg' %}"

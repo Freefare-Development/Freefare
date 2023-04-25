@@ -172,8 +172,10 @@
                     </label>
                 </div>
                 {% endfor %}
+                {{ form.post_day.errors}}
             </div>
-            {{ form.post_day.errors}}
+            
+            {{ donor_post_form.non_field_errors}}
         </div>
         {% endfor %}
         <div class="row sign-row">
