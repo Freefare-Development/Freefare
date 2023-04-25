@@ -4,6 +4,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_text
 from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
@@ -115,20 +116,32 @@ def signup(request):
             Profile.objects.create(user=user)
             token = user_tokenizer.make_token(user)
             user_id = urlsafe_base64_encode(force_bytes(user.id))
-            url = 'http://localhost:8000' + reverse('confirm_email', kwargs={'user_id': user_id, 'token': token})
-            message = get_template("main/account_activation_email.html").render({
+            current_site = get_current_site(request)  
+            subject = 'Freefare Confirmation Email'
+            from_email = settings.EMAIL_HOST_USER
+            recipient_list = [user.email]
+            url = current_site.domain + reverse('confirm_email', kwargs={'user_id': user_id, 'token': token})
+            html_message = render_to_string('main/account_activation_email.html', {'confirm_url': url})
+            plain_message = strip_tags(html_message)
+
+            # url = 'http://localhost:8000' + reverse('confirm_email', kwargs={'user_id': user_id, 'token': token})
+            message = get_template("main/account_activation_email_simple.html").render({
               'confirm_url': url
             })
-            mail = EmailMessage('Freefare Confirmation Email', message, to=[user.email], from_email=settings.EMAIL_HOST_USER)
-            mail.content_subtype = 'html'
-            mail.send()
+            # mail = EmailMessage('Freefare Confirmation Email', message, to=[user.email], from_email=settings.EMAIL_HOST_USER)
+            # mail.content_subtype = 'html'
+            # mail.send()
+            
+            try:
+                send_mail(subject, plain_message, from_email, recipient_list, html_message=html_message)      
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
             messages.success(request,  f'A confirmation email has been sent to {user.email}. Please confirm to finish registering')
-
             return redirect("homepage")
-
+        
         else:
             for msg in form.error_messages:
-                messages.error(request, f"Some of your input is off. Try again.")
+                messages.error(request, f"Registration failed. Try again.")
             
             return render(request = request,
                           template_name = "main/signup.html",
