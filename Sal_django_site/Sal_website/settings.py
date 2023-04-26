@@ -34,7 +34,7 @@ DEBUG = True
 
 # ALLOWED_HOSTS = []
 ALLOWED_HOSTS = [os.getenv("DJANGO_ALLOWED_HOSTS"),"127.0.0.1","localhost","167.71.106.235","68.183.143.170","32.213.8.188","24.60.248.41","108.30.157.162", "192.168.1.69",
-                 "74.71.89.122","24.97.185.90", "98.113.160.98", "74.71.90.175", "74.71.79.251", "testserver"]
+                 "74.71.89.122","24.97.185.90", "98.113.160.98", "74.71.90.175", "74.71.79.251", "testserver", "findfreefare.com"]
                          
 # ['freefoodsal.com', 'www.freefoodsal.com', '167.71.106.235', 'http://127.0.0.1:8000']
 # Application definition
@@ -110,30 +110,30 @@ WSGI_APPLICATION = 'Sal_website.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
-
-
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'defaultdb',
-#         'USER' : 'doadmin',
-#         'PASSWORD': 'AVNS_0rub7t86vsLNkona9PY',
-#         'HOST' : 'db-postgresql-nyc3-88337-do-user-11366552-0.b.db.ondigitalocean.com',
-#         # 'HOST': 'localhost:3000',
-#         'PORT' : '25060',
-#                 'TEST': {
-#             'NAME': 'test_postdb',
-#         },
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+
+
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'defaultdb',
+        'USER' : 'doadmin',
+        'PASSWORD': 'AVNS_0rub7t86vsLNkona9PY',
+        'HOST' : 'db-postgresql-nyc3-88337-do-user-11366552-0.b.db.ondigitalocean.com',
+        # 'HOST': 'localhost:3000',
+        'PORT' : '25060',
+                'TEST': {
+            'NAME': 'test_postdb',
+        },
+    }
+}
 
 
 
