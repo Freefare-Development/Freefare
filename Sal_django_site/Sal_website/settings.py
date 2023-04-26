@@ -104,7 +104,7 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'Sal_website.wsgi.application'
+WSGI_APPLICATION = 'Sal_website.wsgi.application'
 
 
 # Database
