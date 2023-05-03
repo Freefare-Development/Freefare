@@ -29,7 +29,7 @@ djangorestframework==3.11.2
 django-extensions==3.1.5
 drf-social-oauth2==1.1.4
 escapejson==1.0
-gunicorn==20.1.0 
+gunicorn
 idna==2.10
 isort==4.3.21
 jwcrypto==1.4
