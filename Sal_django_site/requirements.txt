@@ -40,7 +40,6 @@ Flask-JWT-Extended==3.25.0
 Flask-Login==0.4.1
 
 gunicorn==19.10.0
-djangorestframework==3.11.1
 drf-social-oauth2==1.2.1
 ecdsa==0.17.0
 escapejson==1.0
