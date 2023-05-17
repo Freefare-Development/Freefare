@@ -1,5 +1,5 @@
 import os
-from magic import magic
+import magic
 from django.core.exceptions import ValidationError
 
 def validate_is_pic(file):
