@@ -188,7 +188,7 @@ PROJECT_DIR_ABOVE = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath
 
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'main/static'),
+    os.path.join(BASE_DIR, 'Sal_website/static'),
     os.path.join(BASE_DIR, 'node_modules'),
     ('google','node_modules/@google'),
 ]
