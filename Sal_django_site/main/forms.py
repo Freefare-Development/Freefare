@@ -141,7 +141,7 @@ class RecipientPostForm(forms.ModelForm):
         # print(self.cleaned_data)
         # print("********")
         # print(len(post_desc))
-        # post_desc = escape(post_desc)
+        post_desc = escape(post_desc)
         if '<' in post_desc or '>' in post_desc or '*' in post_desc or '/' in post_desc or '|' in post_desc or '=' in post_desc:
             raise forms.ValidationError("Item description should not have special characters.")
         if len(post_desc) < 5:
@@ -254,7 +254,7 @@ class DonorPostForm(forms.ModelForm):
       
     def clean_post_desc(self):
         post_desc = self.cleaned_data['post_desc']
-        # post_desc = escape(post_desc)
+        post_desc = escape(post_desc)
         if '<' in post_desc or '>' in post_desc or '*' in post_desc or '/' in post_desc or '|' in post_desc or '=' in post_desc:
             raise forms.ValidationError("Item description should not have special characters.")
         if len(post_desc) < 5:
