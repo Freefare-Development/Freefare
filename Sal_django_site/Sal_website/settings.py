@@ -34,7 +34,9 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 
 # ALLOWED_HOSTS = []
 ALLOWED_HOSTS = [os.getenv("DJANGO_ALLOWED_HOSTS"),"127.0.0.1","localhost","167.71.106.235","68.183.143.170","32.213.8.188","24.60.248.41","108.30.157.162", "192.168.1.69",
-                 "74.71.89.122","24.97.185.90", "98.113.160.98", "74.71.90.175", "74.71.79.251", "testserver", "findfreefare.com", "127.0.0.1:8000", "freefare-app-s8wht.ondigitalocean.app"]
+                 "74.71.89.122","24.97.185.90", "98.113.160.98", "74.71.90.175", "74.71.79.251", "testserver", "findfreefare.com", "127.0.0.1:8000",
+                 "freefare-app-s8wht.ondigitalocean.app",
+                 "freefare-app-dev-8s4xi.ondigitalocean.app"]
                          
 # ['freefoodsal.com', 'www.freefoodsal.com', '167.71.106.235', 'http://127.0.0.1:8000']
 # Application definition
