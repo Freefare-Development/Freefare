@@ -1,30 +1,80 @@
-name: CI
+name: Example CI Django & Postgres Tests on DigitalOcean
 
+# Controls when the workflow will run
 on:
+  # Runs on pushes or pull requests to DEV
   push:
     branches: [ "DEV" ]
   pull_request:
     branches: [ "DEV" ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  # This workflow contains a single job called "build"
   build:
-
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 4
-      matrix:
-        python-version: [3.7, 3.8, 3.9]
-
+    services:
+      postgres_main:
+        image: postgres:12
+        env:
+          POSTGRES_USER: doadmin
+          POSTGRES_PASSWORD: AVNS_0rub7t86vsLNkona9PY
+          POSTGRES_DB: test_postdb
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-    - name: Run Tests
-      run: |
-        python manage.py test
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: Activate environment
+        run: |
+          source env/bin/activate
+      - name: Install setup wheel
+        run: |
+          pip3 install --upgrade pip setuptools wheel
+      - name: Install requirements
+        run: |
+          pip install -r requirements.txt
+      - name: Run Tests
+        env:
+          DEBUG: "0"
+          DJANGO_SECRET_KEY: CI_CD_TEST_KEY
+          EMAIL_HOST_USER : salhateswaste@gmail.com
+          EMAIL_HOST_PASSWORD : zjaiveqskawhhrry
+          SOCIAL_AUTH_GOOGLE_OAUTH2_KEY : 407986684072-e50nufsm8s5jus4lfbs3cinh3t7iskgl.apps.googleusercontent.com
+          SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET : DVdRL-eS9spj5jDnLzAVdA8t
+          SOCIAL_AUTH_FACEBOOK_KEY : 686348802147611
+          SOCIAL_AUTH_FACEBOOK_SECRET : 43ed86032702b22b262025e0424c0f31
+          GOOGLE_API_KEY : AIzaSyCbMU1uNeRWo7V47J7Bz3WJSaLKQxz6DbE
+          DJANGO_ALLOWED_HOSTS : "freefare-app-s8wht.ondigitalocean.app, findfreefare.com, 167.71.106.235, 0.0.0.0:8080"
+
+          POSTGRES_USER: doadmin
+          POSTGRES_PASSWORD: AVNS_0rub7t86vsLNkona9PY
+          POSTGRES_DB: test_postdb
+          POSTGRES_PORT: 5432
+        run: |
+          python manage.py test
+      # - name: Push Main Branch into Production
+      #   uses: codingforentrepreneurs/action-branch-to-branch@main
+      #   with:
+      #     dest_branch: production-3
+      #     source_branch: main
+      #     commit_message: "Release production version"
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      # - name: Install doctl
+      #   uses: digitalocean/action-doctl@v2
+      #   with:
+      #     token: ${{ secrets.DO_ACCESS_TOKEN }}
+      # - name: Run a DOCTL Command
+      #   run: |
+      #     doctl apps update ${{ secrets.DO_APP_ID }} --spec .do/app.yaml
