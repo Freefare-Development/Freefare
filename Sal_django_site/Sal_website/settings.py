@@ -112,30 +112,30 @@ WSGI_APPLICATION = 'Sal_website.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
-
-
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'defaultdb',
-        'USER' : 'doadmin',
-        'PASSWORD': 'AVNS_0rub7t86vsLNkona9PY',
-        'HOST' : 'db-postgresql-nyc3-88337-do-user-11366552-0.b.db.ondigitalocean.com',
-        # 'HOST': 'localhost:3000',
-        'PORT' : '25060',
-                'TEST': {
-            'NAME': 'test_postdb',
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'defaultdb',
+#         'USER' : 'doadmin',
+#         'PASSWORD': 'AVNS_0rub7t86vsLNkona9PY',
+#         'HOST' : 'db-postgresql-nyc3-88337-do-user-11366552-0.b.db.ondigitalocean.com',
+#         # 'HOST': 'localhost:3000',
+#         'PORT' : '25060',
+#                 'TEST': {
+#             'NAME': 'test_postdb',
+#         },
+#     }
+# }
 
 
 
