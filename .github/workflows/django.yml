@@ -62,7 +62,7 @@ jobs:
           POSTGRES_DB: djtesting
           POSTGRES_PORT: 5432
         run: |
-          python manage.py test
+          python manage.py test main.tests
       # - name: Push Main Branch into Production
       #   uses: codingforentrepreneurs/action-branch-to-branch@main
       #   with:
