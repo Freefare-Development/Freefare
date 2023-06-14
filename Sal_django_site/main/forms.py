@@ -10,7 +10,6 @@ from django.forms import inlineformset_factory, ModelForm, BaseInlineFormSet
 
 class ContactForm(forms.Form):
     from_email = forms.EmailField(required=True)
-    print(from_email)
     name = forms.CharField(required=True)
     message = forms.CharField(widget=forms.Textarea, required=True)
 
