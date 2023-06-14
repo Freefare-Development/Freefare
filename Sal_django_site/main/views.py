@@ -55,6 +55,7 @@ def contactView(request):
         if form.is_valid():
             subject = "Inquiry From Freefare Contact Form"+ ": from "+ form.cleaned_data['name']
             from_email = form.cleaned_data['from_email']
+            print(from_email)
             message = form.cleaned_data['message']
             recipient_list = ['salhateswaste@gmail.com']
             # connection = [
