@@ -45,21 +45,9 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Test database connection
+      - name: Find this IP
         run: |
-          import psycopg2
-          conn = psycopg2.connect(
-              host="db-postgresql-nyc3-88337-do-user-11366552-0.b.db.ondigitalocean.com",
-              port=25060,
-              dbname="postgres",
-              user="postgres",
-              password="postgres"
-          )
-          cur = conn.cursor()
-          cur.execute("SELECT 1")
-          print(cur.fetchone())
-          cur.close()
-          conn.close()
+          curl https://ipinfo.io/ip
         
       - name: Run Tests
         env:
