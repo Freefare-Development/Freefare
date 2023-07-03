@@ -62,7 +62,7 @@ jobs:
           POSTGRES_PORT: 5432
         run: |
           cd Sal_django_site
-          python manage.py test main.tests
+          python manage.py test main.tests --keepdb
       # - name: Push Main Branch into Production
       #   uses: codingforentrepreneurs/action-branch-to-branch@main
       #   with:
