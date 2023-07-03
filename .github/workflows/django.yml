@@ -55,7 +55,6 @@ jobs:
           SOCIAL_AUTH_FACEBOOK_KEY : 686348802147611
           SOCIAL_AUTH_FACEBOOK_SECRET : 43ed86032702b22b262025e0424c0f31
           GOOGLE_API_KEY : AIzaSyCbMU1uNeRWo7V47J7Bz3WJSaLKQxz6DbE
-          DJANGO_ALLOWED_HOSTS : "freefare-app-s8wht.ondigitalocean.app"
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: djtesting
