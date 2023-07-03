@@ -22,7 +22,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: djtesting
+          POSTGRES_DB: postgres
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
@@ -47,7 +47,7 @@ jobs:
       - name: Run Tests
         env:
           DEBUG: "0"
-          DJANGO_SECRET_KEY: CI_CD_TEST_KEY
+          DJANGO_SECRET_KEY: jqx$ui-)yzj4!q024_pgu+vyvt05107l!7i_)4no=r$4y)%yj3
           EMAIL_HOST_USER : salhateswaste@gmail.com
           EMAIL_HOST_PASSWORD : zjaiveqskawhhrry
           SOCIAL_AUTH_GOOGLE_OAUTH2_KEY : 407986684072-e50nufsm8s5jus4lfbs3cinh3t7iskgl.apps.googleusercontent.com
@@ -55,9 +55,10 @@ jobs:
           SOCIAL_AUTH_FACEBOOK_KEY : 686348802147611
           SOCIAL_AUTH_FACEBOOK_SECRET : 43ed86032702b22b262025e0424c0f31
           GOOGLE_API_KEY : AIzaSyCbMU1uNeRWo7V47J7Bz3WJSaLKQxz6DbE
+          DJANGO_ALLOWED_HOSTS: freefare-app-s8wht.ondigitalocean.app
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: djtesting
+          POSTGRES_DB: postgres
           POSTGRES_PORT: 5432
         run: |
           cd Sal_django_site
