@@ -44,6 +44,23 @@ jobs:
       - name: Install requirements
         run: |
           pip install -r requirements.txt
+
+      - name: Test database connection
+        run: |
+          import psycopg2
+          conn = psycopg2.connect(
+              host="db-postgresql-nyc3-88337-do-user-11366552-0.b.db.ondigitalocean.com",
+              port=25060,
+              dbname="postgres",
+              user="postgres",
+              password="postgres"
+          )
+          cur = conn.cursor()
+          cur.execute("SELECT 1")
+          print(cur.fetchone())
+          cur.close()
+          conn.close()
+        
       - name: Run Tests
         env:
           DEBUG: "0"
@@ -60,6 +77,7 @@ jobs:
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: postgres
           POSTGRES_PORT: 5432
+
         run: |
           cd Sal_django_site
           python manage.py test main.tests
