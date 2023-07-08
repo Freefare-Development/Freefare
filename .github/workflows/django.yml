@@ -55,6 +55,7 @@ jobs:
           digitaloceanToken: ${{ secrets.DO_TOKEN }}
           firewallName: "Basic-Freefare-Firewall"
           actionToDo: "add"
+          port: 5432
           dryRun: false
 
       - name: Run Tests
@@ -93,11 +94,12 @@ jobs:
       #   run: |
       #     doctl apps update ${{ secrets.DO_APP_ID }} --spec .do/app.yaml
 
-      
+
       - name: Doorkeeper close
         uses: patoroco/doorkeeper@master
         with:
           digitaloceanToken: ${{ secrets.DO_TOKEN }}
           firewallName: "Basic-Freefare-Firewall"
           actionToDo: "remove"
+          port: 5432
           dryRun: false
