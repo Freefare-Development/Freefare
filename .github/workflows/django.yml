@@ -48,7 +48,15 @@ jobs:
       - name: Find this IP
         run: |
           curl https://ipinfo.io/ip
-        
+      
+      - name: Doorkeeper open
+        uses: patoroco/doorkeeper@master
+        with:
+          digitaloceanToken: ${{ secrets.DO_TOKEN }}
+          firewallName: "Basic-Freefare-Firewall"
+          actionToDo: "add"
+          dryRun: false
+
       - name: Run Tests
         env:
           DEBUG: "0"
@@ -84,3 +92,12 @@ jobs:
       # - name: Run a DOCTL Command
       #   run: |
       #     doctl apps update ${{ secrets.DO_APP_ID }} --spec .do/app.yaml
+
+      
+      - name: Doorkeeper close
+        uses: patoroco/doorkeeper@master
+        with:
+          digitaloceanToken: ${{ secrets.DO_TOKEN }}
+          firewallName: "Basic-Freefare-Firewall"
+          actionToDo: "remove"
+          dryRun: false
