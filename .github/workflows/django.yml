@@ -45,32 +45,30 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: get runner ip address
-        id: ip
-        uses: haythem/public-ip@v1.2
+      # - name: get runner ip address
+      #   id: ip
+      #   uses: haythem/public-ip@v1.2
 
-      - name: Print Public IP
-        run: |
-          echo ${{ steps.ip.outputs.ipv6 }}
+      # - name: Print Public IP
+      #   run: |
+      #     echo ${{ steps.ip.outputs.ipv6 }}
 
-      - name: Install doctl
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DO_TOKEN }}
-
-      - name: Run a DOCTL Command
-        run: |
-          doctl databases firewalls append 04b1ea17-50aa-4f20-8332-6264c1e9e74c  --rule ip_addr:${{ steps.ip.outputs.ipv6 }}
-
-
-      # - name: Doorkeeper open
-      #   uses: patoroco/doorkeeper@master
+      # - name: Install doctl
+      #   uses: digitalocean/action-doctl@v2
       #   with:
-      #     digitaloceanToken: ${{ secrets.DO_TOKEN }}
-      #     firewallName: "digitalocean_database_firewall"
-      #     actionToDo: "add"
-      #     port: 25060
-      #     dryRun: false
+      #     token: ${{ secrets.DO_TOKEN }}
+
+      # - name: Run a DOCTL Command
+      #   run: |
+      #     doctl databases firewalls append 04b1ea17-50aa-4f20-8332-6264c1e9e74c  --rule ip_addr:${{ steps.ip.outputs.ipv6 }}
+
+      - name: Add IP address to trusted source (managed database)
+        uses: GarreauArthur/manage-digital-ocean-managed-database-trusted-sources-gh-action@main
+        with:
+          action: "add"
+          database_id: ${{ secrets.DO_DATABASE_ID }}
+          digitalocean_token: ${{ secrets.DO_TOKEN }}
+    
 
       - name: Run Tests
         env:
@@ -118,6 +116,10 @@ jobs:
       #     port: 25060
       #     dryRun: false
 
-      - name: List rules
-        run: |
-          doctl databases firewalls remove 04b1ea17-50aa-4f20-8332-6264c1e9e74c  --rule ip_addr:${{ steps.ip.outputs.ipv6 }}
+
+      - name: Remove IP address to trusted source (managed database)
+        uses: GarreauArthur/manage-digital-ocean-managed-database-trusted-sources-gh-action@main
+        with:
+          action: "remove"
+          database_id: ${{ secrets.DO_DATABASE_ID}}
+          digitalocean_token: ${{ secrets.DO_TOKEN }}
