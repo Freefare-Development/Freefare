@@ -55,7 +55,7 @@ jobs:
           digitaloceanToken: ${{ secrets.DO_TOKEN }}
           firewallName: "Basic-Freefare-Firewall"
           actionToDo: "add"
-          port: 5432
+          port: 25060
           dryRun: false
 
       - name: Run Tests
@@ -101,5 +101,5 @@ jobs:
           digitaloceanToken: ${{ secrets.DO_TOKEN }}
           firewallName: "Basic-Freefare-Firewall"
           actionToDo: "remove"
-          port: 5432
+          port: 25060
           dryRun: false
