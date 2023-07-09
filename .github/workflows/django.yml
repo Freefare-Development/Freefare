@@ -48,12 +48,22 @@ jobs:
       - name: Find this IP
         run: |
           curl https://ipinfo.io/ip
-      
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DO_TOKEN }}
+
+      - name: Run a DOCTL Command
+        run: |
+          doctl databases list
+
+
       - name: Doorkeeper open
         uses: patoroco/doorkeeper@master
         with:
           digitaloceanToken: ${{ secrets.DO_TOKEN }}
-          firewallName: "Basic-Freefare-Firewall"
+          firewallName: "digitalocean_database_firewall"
           actionToDo: "add"
           port: 25060
           dryRun: false
@@ -89,17 +99,17 @@ jobs:
       # - name: Install doctl
       #   uses: digitalocean/action-doctl@v2
       #   with:
-      #     token: ${{ secrets.DO_ACCESS_TOKEN }}
+      #     token: ${{ secrets.DO_TOKEN }}
       # - name: Run a DOCTL Command
       #   run: |
-      #     doctl apps update ${{ secrets.DO_APP_ID }} --spec .do/app.yaml
+      #     doctl databases list
 
 
       - name: Doorkeeper close
         uses: patoroco/doorkeeper@master
         with:
           digitaloceanToken: ${{ secrets.DO_TOKEN }}
-          firewallName: "Basic-Freefare-Firewall"
+          firewallName: "digitalocean_database_firewall"
           actionToDo: "remove"
           port: 25060
           dryRun: false
