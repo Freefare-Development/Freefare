@@ -60,7 +60,6 @@ jobs:
 
       - name: Run a DOCTL Command
         run: |
-          doctl databases list
           doctl databases firewalls append 04b1ea17-50aa-4f20-8332-6264c1e9e74c  --rule ip_addr:${{ steps.ip.outputs.ipv6 }}
 
 
@@ -121,4 +120,4 @@ jobs:
 
       - name: List rules
         run: |
-          doctl databases firewalls list <database-id>
+          doctl databases firewalls list 04b1ea17-50aa-4f20-8332-6264c1e9e74c
