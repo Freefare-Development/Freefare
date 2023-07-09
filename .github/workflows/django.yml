@@ -45,9 +45,13 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Find this IP
+      - name: get runner ip address
+        id: ip
+        uses: haythem/public-ip@v1.2
+
+      - name: Print Public IP
         run: |
-          curl https://ipinfo.io/ip
+          echo ${{ steps.ip.outputs.ipv6 }}
 
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
@@ -57,16 +61,17 @@ jobs:
       - name: Run a DOCTL Command
         run: |
           doctl databases list
+          doctl databases firewalls append 04b1ea17-50aa-4f20-8332-6264c1e9e74c  --rule ip_addr:${{ steps.ip.outputs.ipv6 }}
 
 
-      - name: Doorkeeper open
-        uses: patoroco/doorkeeper@master
-        with:
-          digitaloceanToken: ${{ secrets.DO_TOKEN }}
-          firewallName: "digitalocean_database_firewall"
-          actionToDo: "add"
-          port: 25060
-          dryRun: false
+      # - name: Doorkeeper open
+      #   uses: patoroco/doorkeeper@master
+      #   with:
+      #     digitaloceanToken: ${{ secrets.DO_TOKEN }}
+      #     firewallName: "digitalocean_database_firewall"
+      #     actionToDo: "add"
+      #     port: 25060
+      #     dryRun: false
 
       - name: Run Tests
         env:
@@ -105,11 +110,15 @@ jobs:
       #     doctl databases list
 
 
-      - name: Doorkeeper close
-        uses: patoroco/doorkeeper@master
-        with:
-          digitaloceanToken: ${{ secrets.DO_TOKEN }}
-          firewallName: "digitalocean_database_firewall"
-          actionToDo: "remove"
-          port: 25060
-          dryRun: false
+      # - name: Doorkeeper close
+      #   uses: patoroco/doorkeeper@master
+      #   with:
+      #     digitaloceanToken: ${{ secrets.DO_TOKEN }}
+      #     firewallName: "digitalocean_database_firewall"
+      #     actionToDo: "remove"
+      #     port: 25060
+      #     dryRun: false
+
+      - name: List rules
+        run: |
+          doctl databases firewalls list <database-id>
