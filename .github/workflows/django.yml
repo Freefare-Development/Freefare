@@ -4,9 +4,9 @@ name: CI Django & Postgres Tests on DigitalOcean
 on:
   # Runs on pushes or pull requests to DEV
   push:
-    branches: [ "DEV" ]
+    branches: [ "UAT" ]
   pull_request:
-    branches: [ "DEV" ]
+    branches: [ "UAT" ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
